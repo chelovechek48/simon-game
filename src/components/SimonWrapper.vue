@@ -1,10 +1,12 @@
 <script setup>
 import SimonList from '@components/SimonList.vue';
+import SimonControls from '@components/SimonControls.vue';
 </script>
 
 <template>
   <section class="simon">
     <SimonList />
+    <SimonControls />
   </section>
 </template>
 
