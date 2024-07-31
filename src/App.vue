@@ -1,7 +1,22 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue';
+import SimonWrapper from '@components/SimonWrapper.vue';
 </script>
 
 <template>
-  <HelloWorld message-text="new-project" />
+  <main class="page">
+    <SimonWrapper />
+  </main>
 </template>
+
+<style lang="scss">
+@import '@styles';
+</style>
+
+<style lang="scss" scoped>
+.page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
