@@ -3,7 +3,7 @@ import { fileURLToPath, URL } from 'url';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-  base: '/simon',
+  base: '/simon-game',
   server: {
     port: '8080',
   },
