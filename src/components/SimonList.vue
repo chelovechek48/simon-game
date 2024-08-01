@@ -1,4 +1,5 @@
 <script setup>
+const emit = defineEmits(['selectSector']);
 const props = defineProps({
   session: {
     type: Object,
@@ -35,6 +36,7 @@ const itemIsNotDisabled = (color) => {
         :class="itemIsNotDisabled(color)
           ? 'list__button'
           : 'list__button list__button_hidden'"
+        @click="emit('selectSector', color)"
       />
     </li>
   </ul>
