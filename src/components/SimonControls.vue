@@ -1,5 +1,12 @@
+<script setup>
+const emit = defineEmits(['startGame']);
+</script>
+
 <template>
-  <button class="controls">
+  <button
+    class="controls"
+    @click="emit('startGame')"
+  >
     Начать
   </button>
 </template>

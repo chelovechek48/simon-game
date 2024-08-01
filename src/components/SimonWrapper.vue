@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import SimonList from '@components/SimonList.vue';
 import SimonControls from '@components/SimonControls.vue';
 
@@ -15,17 +15,9 @@ const getRandomIndex = () => {
   return Math.floor(Math.random() * maxIndex);
 };
 
-const setCombo = () => {
-  const prevCount = session.value.comboList.length;
-  const minCount = 3;
-  const count = (prevCount >= minCount) ? (prevCount + 1) : minCount;
-
-  const newCombo = Array.from(
-    { length: count },
-    () => session.value.colorsList[getRandomIndex()],
-  );
-
-  session.value.comboList = newCombo;
+const extendCombo = () => {
+  const newComboItem = session.value.colorsList[getRandomIndex()];
+  session.value.comboList.push(newComboItem);
 };
 
 const showCombo = () => {
@@ -53,15 +45,16 @@ const showCombo = () => {
   }, duration);
 };
 
-onMounted(() => {
-  setCombo();
-});
+const launchCombo = () => {
+  extendCombo();
+  showCombo();
+};
 </script>
 
 <template>
   <section class="simon">
     <SimonList :session="session" />
-    <SimonControls @click="showCombo" />
+    <SimonControls @startGame="launchCombo()" />
   </section>
 </template>
 
