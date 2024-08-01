@@ -92,7 +92,7 @@ const checkOption = (option) => {
 
 <style lang="scss" scoped>
 .simon {
-  width: 30rem;
+  width: min(30rem, 100vw);
   position: relative;
 }
 </style>

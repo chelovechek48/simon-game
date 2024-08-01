@@ -40,7 +40,7 @@ const progress = () => {
   position: absolute;
   inset: 25%;
 
-  font-size: 2.5rem;
+  font-size: clamp(1rem, 10vw, 3rem);
   color: #fff;
   background-color: #343432;
   border-radius: 50%;

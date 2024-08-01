@@ -18,6 +18,7 @@ import SimonWrapper from '@components/SimonWrapper.vue';
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.75rem;
 
   background-color: #343432;
 }
