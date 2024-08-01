@@ -43,11 +43,13 @@ const showCombo = () => {
     }, delay * index);
   });
 
-  const duration = delay * comboList.length + interval;
   session.value.disabled = true;
+  const duration = delay * comboList.length;
   setTimeout(() => {
-    session.value.disabled = false;
     session.value.activeColor = null;
+    setTimeout(() => {
+      session.value.disabled = false;
+    }, interval);
   }, duration);
 };
 
