@@ -8,10 +8,16 @@ const getDeg = (index) => {
 };
 
 const session = ref({
-  colorsList: ['red', 'green', 'blue', 'gray'],
+  colorsList: ['#34c940', '#f22412', '#f7ea29', '#0189de'],
   comboList: [],
   activeColor: null,
+  disabled: true,
 });
+const itemIsNotDisabled = (color) => {
+  const sessionIsNotDisabled = !session.value.disabled;
+  const isActiveColor = session.value.activeColor === color;
+  return sessionIsNotDisabled || isActiveColor;
+};
 
 const getRandomIndex = () => {
   const maxIndex = session.value.colorsList.length;
@@ -31,30 +37,34 @@ const setCombo = () => {
   session.value.comboList = newCombo;
 };
 
-const play = () => {
+const showCombo = () => {
   const { comboList } = session.value;
 
-  const minDuration = 3000;
-  const minDelay = 500;
-
-  const comboLength = comboList.length;
-  const calculatedDelay = minDuration / comboLength;
-  const delay = calculatedDelay < minDelay ? minDelay : calculatedDelay;
+  const delay = 1500;
+  const interval = delay / 3;
 
   comboList.forEach((color, index) => {
     setTimeout(() => {
-      session.value.activeColor = color;
+      session.value.activeColor = null;
+      setTimeout(() => {
+        session.value.activeColor = color;
+      }, interval);
     }, delay * index);
   });
 
+  const duration = delay * comboList.length + interval;
+  session.value.disabled = true;
   setTimeout(() => {
+    session.value.disabled = false;
     session.value.activeColor = null;
-  }, delay * comboLength);
+  }, duration);
 };
 
 onMounted(() => {
   setCombo();
-  play();
+  setTimeout(() => {
+    showCombo();
+  }, 200);
 });
 
 </script>
@@ -71,9 +81,10 @@ onMounted(() => {
       `"
     >
       <button
-        :class="session.activeColor === color
-          ? 'list__button list__button_active'
-          : 'list__button'"
+        :disabled="session.disabled"
+        :class="itemIsNotDisabled(color)
+          ? 'list__button'
+          : 'list__button list__button_hidden'"
       />
     </li>
   </ul>
@@ -96,10 +107,9 @@ onMounted(() => {
     border-top-left-radius: 100%;
     rotate: var(--rotate-deg);
 
-    &_active,
-    &:focus-visible {
-      outline: none;
-      border: 0.5rem solid #000;
+    transition: opacity 125ms ease;
+    &_hidden {
+      opacity: 0.25;
     }
   }
 }

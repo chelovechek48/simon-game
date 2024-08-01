@@ -7,8 +7,7 @@
   position: absolute;
   inset: 25%;
 
-  background-color: gray;
+  background-color: #343432;
   border-radius: 50%;
-  border: 0.5rem solid #000;
 }
 </style>
