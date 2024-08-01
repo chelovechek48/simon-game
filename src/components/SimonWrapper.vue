@@ -1,12 +1,65 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import SimonList from '@components/SimonList.vue';
 import SimonControls from '@components/SimonControls.vue';
+
+const session = ref({
+  colorsList: ['#34c940', '#f22412', '#f7ea29', '#0189de'],
+  comboList: [],
+  activeColor: null,
+  disabled: true,
+});
+
+const getRandomIndex = () => {
+  const maxIndex = session.value.colorsList.length;
+  return Math.floor(Math.random() * maxIndex);
+};
+
+const setCombo = () => {
+  const prevCount = session.value.comboList.length;
+  const minCount = 3;
+  const count = (prevCount >= minCount) ? (prevCount + 1) : minCount;
+
+  const newCombo = Array.from(
+    { length: count },
+    () => session.value.colorsList[getRandomIndex()],
+  );
+
+  session.value.comboList = newCombo;
+};
+
+const showCombo = () => {
+  const { comboList } = session.value;
+
+  const delay = 1000;
+  const interval = delay / 3;
+
+  comboList.forEach((color, index) => {
+    setTimeout(() => {
+      session.value.activeColor = null;
+      setTimeout(() => {
+        session.value.activeColor = color;
+      }, interval);
+    }, delay * index);
+  });
+
+  const duration = delay * comboList.length + interval;
+  session.value.disabled = true;
+  setTimeout(() => {
+    session.value.disabled = false;
+    session.value.activeColor = null;
+  }, duration);
+};
+
+onMounted(() => {
+  setCombo();
+});
 </script>
 
 <template>
   <section class="simon">
-    <SimonList />
-    <SimonControls />
+    <SimonList :session="session" />
+    <SimonControls @click="showCombo" />
   </section>
 </template>
 
